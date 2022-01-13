@@ -1,0 +1,1 @@
+The json and xml python scripts do the same functionality in that they take a location as an input, then return the latitude and longitude of that place. The only difference is that the json script fetches json data from the api whether that be Dr.Chucks or the actual google api, then parses it. Similarly, the xml script fetches the same data in xml format and parses that.

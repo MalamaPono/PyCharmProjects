@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "streams.py", line 3, in <module>
+    raise ValueError("just an error for testing")
+ValueError: just an error for testing

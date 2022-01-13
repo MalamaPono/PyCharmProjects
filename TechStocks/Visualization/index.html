@@ -1,0 +1,72 @@
+<!-- //learn how to better use jQuery, JS, html, and CSS to better style and format my code into structures likes divs that are solid and organized. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <script type="text/javascript" src="finaldata.js"></script>
+  <script>
+
+    var places = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th']
+
+    var dic = {
+      "1st": "'first'",
+      "2nd": "'second'",
+      "3rd": "'third'"
+    }
+
+    var order = JSON.parse(jsonstr)
+    for (i = 0; i < order.length; i++) {
+
+      if (i != 0) {
+        document.write("<br><br><br><br><br>")
+      }
+
+      var text = order[i][0]
+      if (order[i][1] < 0) {
+        document.write('<h1 class=' + dic[places[i]] + '>' + places[i] + " Place:" + '</h1>')
+        document.write('<h1 class="red">' + text + " Stock" + '</h1>')
+      } else {
+        document.write('<h1 class=' + dic[places[i]] + '>' + places[i] + " Place:" + '</h1>')
+        document.write('<h1 class="green">' + text + " Stock" + '</h1>')
+      }
+
+      var up_or_down;
+      if (order[i][1] >= 0) {
+        up_or_down = "up"
+      } else {
+        up_or_down = "down"
+      }
+
+      var balance;
+      if (order[i][1] == 0) {
+        balance = 10000
+      } else if (order[i][1] > 0) {
+        balance = Math.floor((order[i][1] / 100 + 1) * 10000)
+      } else {
+        balance = Math.floor(10000 + (order[i][1] / 100 * 10000))
+      }
+
+      percent = order[i][1]
+      if (order[i][1] < 0) {
+        percent = -1 * order[i][1]
+      }
+      document.write('<p>' + order[i][0] + "Stock" + ' went ' + up_or_down + ' a total of <b>' + percent + '</b>% in the time frame you entered. <b>$10000</b> invested would have turned to <b>$' + balance + '</b></p>')
+      document.write('<img class=chart src=' + "'charts/" + order[i][0] + ".png" + "'" + '>')
+
+    }
+
+  </script>
+
+</body>
+
+
+</html>

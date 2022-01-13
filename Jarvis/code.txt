@@ -1,0 +1,79 @@
+import speech_recognition as sr
+import pyttsx3
+import pyaudio
+import pywhatkit
+from selenium import webdriver
+import datetime
+import wikipedia
+import pyjokes
+from selenium.webdriver.common.by import By
+
+listener = sr.Recognizer()
+engine = pyttsx3.init()
+
+def talk(text):
+    engine.say(text)
+    engine.runAndWait()
+
+def take_command():
+    command = ''
+    try:
+        with sr.Microphone() as source:
+            print('listening...')
+            voice = listener.listen(source)
+            command = listener.recognize_google(voice).lower()
+    except:
+        return False
+    return command
+
+def run():
+    command = take_command()
+
+    while command != 'secret key':
+        if command == 'quit':
+            quit()
+        command = take_command()
+
+    talk('Yes?')
+    # if command.startswith('open'):
+    #     driver = webdriver.Chrome('/Users/malamapono/chromedriver')
+    #     base_url = 'https://www.google.com/search?source=lnms&tbm=vid&q='
+    #     channel = command.replace('open','') + ' channel'
+    #     channel = channel.replace(' ', '%20')
+    #     driver.get(base_url + channel)
+    #     video_element = driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div/div[1]/a')
+    #     video_element.click()
+
+    if command.startswith('play'):
+        song = command.replace('play','')
+        talk('playing ' + song)
+        pywhatkit.playonyt(song)
+    elif 'time' in command:
+        time = datetime.datetime.now().strftime('%I:%M %p')
+        talk('It is ' + time)
+    elif 'who is' or 'what is' in command:
+        search = command.replace('who is','')
+        info = wikipedia.summary(search)
+        talk(info)
+    elif 'joke' in command:
+        talk(pyjokes.get_joke(category='twister'))
+    else:
+        talk('try again')
+
+text = 'Hello this is your virtual assistant Jarvis. What can I do for you.'
+talk(text)
+while True:
+    run()
+
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome('/Users/malamapono/chromedriver')
+base_url = 'https://www.google.com/search?source=lnms&tbm=vid&q='
+channel = 'prestonplayz channel'
+channel = channel.replace(' ','%20')
+driver.get(base_url + channel)
+video_element = driver.find_element(By.XPATH, '//*[@id="rso"]/div[1]/div/div/div[1]/a')
+video_element.click()
+driver.quit()
